@@ -6,6 +6,7 @@ import com.terrylmay.duckling.entity.BaseEntity;
 import com.terrylmay.duckling.entity.DigitalTime;
 import com.terrylmay.duckling.extractor.EntityExtractor;
 import com.terrylmay.duckling.regex.parser.RegexParser;
+import com.terrylmay.duckling.regex.parser.impl.MonthOfTimeRegexParser;
 import com.terrylmay.duckling.regex.parser.impl.YearOfTimeRegexParser;
 import com.terrylmay.duckling.tokenizer.Tokenizer;
 import com.terrylmay.duckling.tokenizer.impl.TimeTokenizer;
@@ -17,6 +18,13 @@ import java.util.List;
 public class TimeEntityExtractor implements EntityExtractor {
 
     Tokenizer tokenizer;
+
+    static List<RegexParser> regexParserChain = new ArrayList<>();
+
+    static {
+        regexParserChain.add(new YearOfTimeRegexParser());
+        regexParserChain.add(new MonthOfTimeRegexParser());
+    }
 
     public TimeEntityExtractor() {
         this.tokenizer = new TimeTokenizer();
@@ -39,14 +47,15 @@ public class TimeEntityExtractor implements EntityExtractor {
     }
 
     private DigitalTime extractFromToken(String token, Context contextDigitalTime) {
-        RegexParser regexParser = new YearOfTimeRegexParser();
         DigitalTime digitalTime = new DigitalTime();
-        digitalTime = (DigitalTime) regexParser.parse(token, digitalTime, contextDigitalTime);
+        for (RegexParser regexParser : regexParserChain) {
+            digitalTime = (DigitalTime) regexParser.parse(token, digitalTime, contextDigitalTime);
+        }
         return digitalTime;
     }
 
     public static void main(String[] args) {
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
-        System.out.println(timeEntityExtractor.extract("17年"));
+        System.out.println(timeEntityExtractor.extract("17年1月到12月"));
     }
 }

@@ -19,8 +19,17 @@ public class MonthOfTimeRegexParser extends TimeRegexParser {
         if (match.find()) {
             digitalTime.setMonth(Integer.parseInt(match.group()));
             /**处理倾向于未来时间的情况*/
-            preferFuture(digitalTime, digitalTimeContext, 1);
+            preferFuture(digitalTime, digitalTimeContext);
         }
         return digitalTime;
+    }
+
+    @Override
+    public void preferFuture(DigitalTime digitalTime, DigitalTimeContext context) {
+        if (context == null) return;
+
+        if (digitalTime.getYear() == -1 && context.getContxt().getYear() != -1) {
+            digitalTime.setYear(context.getContxt().getYear());
+        }
     }
 }

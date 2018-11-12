@@ -6,7 +6,7 @@ public class DigitalTimeContext extends Context {
     DigitalTime contxt;
 
     public DigitalTimeContext(DigitalTime context) {
-        this.contxt = contxt;
+        this.contxt = context;
     }
 
     public DigitalTime getContxt() {
@@ -14,6 +14,6 @@ public class DigitalTimeContext extends Context {
     }
 
     public void setContxt(DigitalTime context) {
-        this.contxt = contxt;
+        this.contxt = context;
     }
 }

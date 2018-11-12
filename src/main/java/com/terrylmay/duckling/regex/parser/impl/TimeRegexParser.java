@@ -11,8 +11,8 @@ public abstract class TimeRegexParser implements RegexParser {
      * 如在晚上说“早上8点看书”，则识别为明天早上;
      * 12月31日说“3号买菜”，则识别为明年1月的3号。
      *
-     * @param checkTimeIndex _tp.tunit时间数组的下标
+     * @param digitalTime 当前处理的时间对象
+     * @param context     处理过的时间对象
      */
-    public void preferFuture(DigitalTime digitalTime, DigitalTimeContext context, int checkTimeIndex) {
-    }
+    public abstract void preferFuture(DigitalTime digitalTime, DigitalTimeContext context);
 }

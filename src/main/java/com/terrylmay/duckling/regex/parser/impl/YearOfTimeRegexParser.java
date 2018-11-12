@@ -1,9 +1,9 @@
 package com.terrylmay.duckling.regex.parser.impl;
 
 import com.terrylmay.duckling.context.Context;
+import com.terrylmay.duckling.context.DigitalTimeContext;
 import com.terrylmay.duckling.entity.BaseEntity;
 import com.terrylmay.duckling.entity.DigitalTime;
-import com.terrylmay.duckling.regex.parser.RegexParser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,5 +38,9 @@ public class YearOfTimeRegexParser extends TimeRegexParser {
             }
         }
         return digitalTime;
+    }
+
+    @Override
+    public void preferFuture(DigitalTime digitalTime, DigitalTimeContext context) {
     }
 }
