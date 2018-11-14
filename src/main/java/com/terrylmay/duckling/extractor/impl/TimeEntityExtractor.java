@@ -2,12 +2,10 @@ package com.terrylmay.duckling.extractor.impl;
 
 import com.terrylmay.duckling.context.Context;
 import com.terrylmay.duckling.context.DigitalTimeContext;
-import com.terrylmay.duckling.entity.BaseEntity;
 import com.terrylmay.duckling.entity.DigitalTime;
 import com.terrylmay.duckling.extractor.EntityExtractor;
 import com.terrylmay.duckling.regex.parser.RegexParser;
-import com.terrylmay.duckling.regex.parser.impl.MonthOfTimeRegexParser;
-import com.terrylmay.duckling.regex.parser.impl.YearOfTimeRegexParser;
+import com.terrylmay.duckling.regex.parser.impl.*;
 import com.terrylmay.duckling.tokenizer.Tokenizer;
 import com.terrylmay.duckling.tokenizer.impl.TimeTokenizer;
 import com.terrylmay.duckling.utils.StringUtils;
@@ -22,8 +20,12 @@ public class TimeEntityExtractor implements EntityExtractor {
     static List<RegexParser> regexParserChain = new ArrayList<>();
 
     static {
-        regexParserChain.add(new YearOfTimeRegexParser());
-        regexParserChain.add(new MonthOfTimeRegexParser());
+        regexParserChain.add(new YearRegexParser());
+        regexParserChain.add(new MonthRegexParser());
+        regexParserChain.add(new DayRegexParser());
+        regexParserChain.add(new HourRegexParser());
+        regexParserChain.add(new MinuteRegexParser());
+        regexParserChain.add(new SecondRegexParser());
     }
 
     public TimeEntityExtractor() {

@@ -8,28 +8,25 @@ import com.terrylmay.duckling.entity.DigitalTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MonthOfTimeRegexParser extends TimeRegexParser {
+public class SecondRegexParser extends TimeRegexParser {
+
     @Override
     public BaseEntity parse(String token, BaseEntity baseEntity, Context context) {
+
         DigitalTime digitalTime = (DigitalTime) baseEntity;
-        DigitalTimeContext digitalTimeContext = (DigitalTimeContext) context;
-        String rule = "((10)|(11)|(12)|([1-9]))(?=月)";
+
+        String rule = "([0-5]?[0-9](?=秒))|((?<=分)[0-5]?[0-9])";
+
         Pattern pattern = Pattern.compile(rule);
         Matcher match = pattern.matcher(token);
         if (match.find()) {
-            digitalTime.setMonth(Integer.parseInt(match.group()));
-            /**处理倾向于未来时间的情况*/
-            preferFuture(digitalTime, digitalTimeContext);
+            digitalTime.setSecond(Integer.parseInt(match.group()));
         }
         return digitalTime;
     }
 
     @Override
-    public void preferFuture(DigitalTime digitalTime, DigitalTimeContext context) {
-        if (context == null) return;
+    public void preferFuture(DigitalTime digitalTime, DigitalTimeContext digitalTimeContext) {
 
-        if (digitalTime.getYear() == -1 && context.getContxt().getYear() != -1) {
-            digitalTime.setYear(context.getContxt().getYear());
-        }
     }
 }

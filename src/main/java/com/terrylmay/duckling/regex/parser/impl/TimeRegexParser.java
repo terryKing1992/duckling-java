@@ -12,7 +12,7 @@ public abstract class TimeRegexParser implements RegexParser {
      * 12月31日说“3号买菜”，则识别为明年1月的3号。
      *
      * @param digitalTime 当前处理的时间对象
-     * @param context     处理过的时间对象
+     * @param digitalTimeContext     处理过的时间对象
      */
-    public abstract void preferFuture(DigitalTime digitalTime, DigitalTimeContext context);
+    public abstract void preferFuture(DigitalTime digitalTime, DigitalTimeContext digitalTimeContext);
 }

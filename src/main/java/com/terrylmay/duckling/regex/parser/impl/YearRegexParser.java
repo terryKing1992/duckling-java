@@ -5,15 +5,17 @@ import com.terrylmay.duckling.context.DigitalTimeContext;
 import com.terrylmay.duckling.entity.BaseEntity;
 import com.terrylmay.duckling.entity.DigitalTime;
 
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class YearOfTimeRegexParser extends TimeRegexParser {
+public class YearRegexParser extends TimeRegexParser {
 
     @Override
     public DigitalTime parse(String token, BaseEntity baseEntity, Context context) {
         /**假如只有两位数来表示年份*/
         DigitalTime digitalTime = (DigitalTime) baseEntity;
+        DigitalTimeContext digitalTimeContext = (DigitalTimeContext) context;
         String rule = "[0-9]{2}(?=年)";
         Pattern pattern = Pattern.compile(rule);
         Matcher match = pattern.matcher(token);
@@ -37,10 +39,30 @@ public class YearOfTimeRegexParser extends TimeRegexParser {
                 digitalTime.setYear(Integer.parseInt(match.group()));
             }
         }
+
+        this.preferFuture(digitalTime, digitalTimeContext);
         return digitalTime;
     }
 
     @Override
-    public void preferFuture(DigitalTime digitalTime, DigitalTimeContext context) {
+    public void preferFuture(DigitalTime digitalTime, DigitalTimeContext digitalTimeContext) {
+        if (digitalTime.getYear() == -1 && digitalTimeContext == null) {
+            digitalTime.setYear(Calendar.getInstance().get(Calendar.YEAR));
+            return;
+        }
+
+        //这边之所以能够直接返回是因为如果上下文已经有了时间, 那么必定会填充成4位的年份
+        if (digitalTime.getYear() == -1 && digitalTimeContext != null) {
+            digitalTime.setYear(digitalTimeContext.getContxt().getYear());
+            return;
+        }
+
+        if (digitalTime.getYear() >= 0 && digitalTime.getYear() < 100) {
+            if (digitalTime.getYear() < 30) {
+                digitalTime.setYear(digitalTime.getYear() + 2000);
+            } else {
+                digitalTime.setYear(digitalTime.getYear() + 1900);
+            }
+        }
     }
 }
