@@ -106,4 +106,13 @@ public class TimeExtractorTest {
         Assert.assertEquals(2018, digitalTimes.get(0).getYear());
         Assert.assertEquals(Calendar.getInstance().get(Calendar.DATE) + 1, digitalTimes.get(0).getDay());
     }
+
+    @Test
+    public void extract_before_year_from_token() {
+        String token = "前年";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Assert.assertEquals(1, digitalTimes.size());
+        Assert.assertEquals(2016, digitalTimes.get(0).getYear());
+    }
 }
