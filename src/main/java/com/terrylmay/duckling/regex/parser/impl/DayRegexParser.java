@@ -22,9 +22,8 @@ public class DayRegexParser extends TimeRegexParser {
         Matcher match = pattern.matcher(token);
         if (match.find()) {
             digitalTime.setDay(Integer.parseInt(match.group()));
-            /**处理倾向于未来时间的情况  @author kexm*/
-            preferFuture(digitalTime, digitalTimeContext);
         }
+        this.preferFuture(digitalTime, digitalTimeContext);
 
         return digitalTime;
     }

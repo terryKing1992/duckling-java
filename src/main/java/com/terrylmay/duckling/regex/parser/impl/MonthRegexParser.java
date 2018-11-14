@@ -19,9 +19,9 @@ public class MonthRegexParser extends TimeRegexParser {
         Matcher match = pattern.matcher(token);
         if (match.find()) {
             digitalTime.setMonth(Integer.parseInt(match.group()));
-            /**处理倾向于未来时间的情况*/
-            preferFuture(digitalTime, digitalTimeContext);
         }
+
+        preferFuture(digitalTime, digitalTimeContext);
         return digitalTime;
     }
 

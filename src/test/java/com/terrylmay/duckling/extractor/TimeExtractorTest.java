@@ -96,4 +96,14 @@ public class TimeExtractorTest {
         Assert.assertEquals(2017, digitalTimes.get(0).getYear());
         Assert.assertEquals(2018, digitalTimes.get(1).getYear());
     }
+
+    @Test
+    public void extract_part_of_day_from_token() {
+        String token = "晚上12点半";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Assert.assertEquals(1, digitalTimes.size());
+        Assert.assertEquals(2018, digitalTimes.get(0).getYear());
+        Assert.assertEquals(Calendar.getInstance().get(Calendar.DATE) + 1, digitalTimes.get(0).getDay());
+    }
 }

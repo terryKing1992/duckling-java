@@ -26,6 +26,7 @@ public class TimeEntityExtractor implements EntityExtractor {
         regexParserChain.add(new HourRegexParser());
         regexParserChain.add(new MinuteRegexParser());
         regexParserChain.add(new SecondRegexParser());
+        regexParserChain.add(new PartOfDayRegexParser());
     }
 
     public TimeEntityExtractor() {
