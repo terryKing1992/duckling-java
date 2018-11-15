@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BeforeYearRegexParser extends TimeRegexParser {
+public class PeriodYearRegexParser extends TimeRegexParser {
     @Override
     public void preferFuture(DigitalTime digitalTime, DigitalTimeContext digitalTimeContext) {
 
@@ -28,6 +28,38 @@ public class BeforeYearRegexParser extends TimeRegexParser {
         Matcher match = pattern.matcher(token);
         if (match.find()) {
             calendar.add(Calendar.YEAR, -2);
+            digitalTime.setYear(calendar.get(Calendar.YEAR));
+        }
+
+        rule = "去年|上一年";
+        pattern = Pattern.compile(rule);
+        match = pattern.matcher(token);
+        if (match.find()) {
+            calendar.add(Calendar.YEAR, -1);
+            digitalTime.setYear(calendar.get(Calendar.YEAR));
+        }
+
+        rule = "今年";
+        pattern = Pattern.compile(rule);
+        match = pattern.matcher(token);
+        if (match.find()) {
+            digitalTime.setYear(calendar.get(Calendar.YEAR));
+        }
+
+        rule = "明年|下一年";
+        pattern = Pattern.compile(rule);
+        match = pattern.matcher(token);
+        if (match.find()) {
+            calendar.add(Calendar.YEAR, 1);
+            digitalTime.setYear(calendar.get(Calendar.YEAR));
+
+        }
+
+        rule = "后年";
+        pattern = Pattern.compile(rule);
+        match = pattern.matcher(token);
+        if (match.find()) {
+            calendar.add(Calendar.YEAR, 2);
             digitalTime.setYear(calendar.get(Calendar.YEAR));
         }
 

@@ -108,11 +108,122 @@ public class TimeExtractorTest {
     }
 
     @Test
-    public void extract_before_year_from_token() {
+    public void extract_before_two_year_from_token() {
         String token = "前年";
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
         List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
         Assert.assertEquals(1, digitalTimes.size());
         Assert.assertEquals(2016, digitalTimes.get(0).getYear());
+    }
+
+    @Test
+    public void extract_before_one_year_from_token() {
+        String token = "去年";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Assert.assertEquals(1, digitalTimes.size());
+        Assert.assertEquals(2017, digitalTimes.get(0).getYear());
+    }
+
+    @Test
+    public void extract_current_year_from_token() {
+        String token = "今年";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Assert.assertEquals(1, digitalTimes.size());
+        Assert.assertEquals(2018, digitalTimes.get(0).getYear());
+    }
+
+    @Test
+    public void extract_next_year_from_token() {
+        String token = "明年";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Assert.assertEquals(1, digitalTimes.size());
+        Assert.assertEquals(2019, digitalTimes.get(0).getYear());
+    }
+
+    @Test
+    public void extract_next_two_year_from_token() {
+        String token = "后年";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Assert.assertEquals(1, digitalTimes.size());
+        Assert.assertEquals(2019, digitalTimes.get(0).getYear());
+    }
+
+    @Test
+    public void extract_year_and_month_from_token() {
+        String token = "明年11月份";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Assert.assertEquals(1, digitalTimes.size());
+        Assert.assertEquals(2019, digitalTimes.get(0).getYear());
+        Assert.assertEquals(11, digitalTimes.get(0).getMonth());
+    }
+
+    @Test
+    public void extract_two_entity_year_and_month_from_token() {
+        String token = "明年11月份到12月份";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Assert.assertEquals(2, digitalTimes.size());
+        Assert.assertEquals(2019, digitalTimes.get(0).getYear());
+        Assert.assertEquals(11, digitalTimes.get(0).getMonth());
+        Assert.assertEquals(2019, digitalTimes.get(1).getYear());
+        Assert.assertEquals(12, digitalTimes.get(1).getMonth());
+    }
+
+    @Test
+    public void extract_month_period_and_month_from_token() {
+        String token = "下个月我要去参加朋友婚礼";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Assert.assertEquals(1, digitalTimes.size());
+        Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), digitalTimes.get(0).getYear());
+        Assert.assertEquals(Calendar.getInstance().get(Calendar.MONTH) + 1, digitalTimes.get(0).getMonth());
+    }
+
+    @Test
+    public void extract_next_two_month_period_and_month_from_token() {
+        String token = "下下个月我要去参加朋友婚礼";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Assert.assertEquals(1, digitalTimes.size());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+
+        calendar.add(Calendar.MONTH, 2);
+        Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
+        Assert.assertEquals(calendar.get(Calendar.MONTH), digitalTimes.get(0).getMonth());
+    }
+
+    @Test
+    public void extract_next_two_week_period_and_month_from_token() {
+        String token = "下下个星期日我要去参加朋友婚礼";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Assert.assertEquals(1, digitalTimes.size());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.add(Calendar.WEEK_OF_MONTH, 2);
+        calendar.set(Calendar.DAY_OF_WEEK, 1);
+        Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
+        Assert.assertEquals(calendar.get(Calendar.MONTH), digitalTimes.get(0).getMonth());
+        Assert.assertEquals(calendar.get(Calendar.DATE), digitalTimes.get(0).getDay());
+    }
+
+    @Test
+    public void extract_next_two_day_period_and_month_from_token() {
+        String token = "大后天就能休息了";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Assert.assertEquals(1, digitalTimes.size());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.add(Calendar.DATE, 3);
+        Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
+        Assert.assertEquals(calendar.get(Calendar.MONTH), digitalTimes.get(0).getMonth());
+        Assert.assertEquals(calendar.get(Calendar.DATE), digitalTimes.get(0).getDay());
     }
 }
