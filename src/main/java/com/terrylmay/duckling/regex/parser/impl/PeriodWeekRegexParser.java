@@ -21,7 +21,7 @@ public class PeriodWeekRegexParser extends TimeRegexParser {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.set(digitalTime.getYear(), digitalTime.getMonth(), digitalTime.getDay(), 0, 0, 0);
+        calendar.set(digitalTime.getYear(), digitalTime.getMonth() - 1, digitalTime.getDay(), 0, 0, 0);
 
         String rule = "(?<=(上上(周|星期)))[1-7]?";
         Pattern pattern = Pattern.compile(rule);
@@ -86,7 +86,7 @@ public class PeriodWeekRegexParser extends TimeRegexParser {
             calendar.set(Calendar.DAY_OF_WEEK, week);
         }
 
-        rule = "(?<!(上|下|上上|下下)(周|星期))[1-7]?";
+        rule = "(?<=((?<!(上|下))(周|星期)))[1-7]?";
         pattern = Pattern.compile(rule);
         match = pattern.matcher(token);
         if (match.find() && !"".equals(match.group())) {
@@ -102,7 +102,7 @@ public class PeriodWeekRegexParser extends TimeRegexParser {
         }
 
         digitalTime.setYear(calendar.get(Calendar.YEAR));
-        digitalTime.setMonth(calendar.get(Calendar.MONTH));
+        digitalTime.setMonth(calendar.get(Calendar.MONTH) + 1);
         digitalTime.setDay(calendar.get(Calendar.DATE));
 
         return digitalTime;

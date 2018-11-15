@@ -28,7 +28,7 @@ public class MonthRegexParser extends TimeRegexParser {
     @Override
     public void preferFuture(DigitalTime digitalTime, DigitalTimeContext context) {
         if (digitalTime.getMonth() == -1 && context == null) {
-            digitalTime.setMonth(Calendar.getInstance().get(Calendar.MONTH));
+            digitalTime.setMonth(Calendar.getInstance().get(Calendar.MONTH) + 1);
         }
 
         if (digitalTime.getMonth() == -1 && context != null) {

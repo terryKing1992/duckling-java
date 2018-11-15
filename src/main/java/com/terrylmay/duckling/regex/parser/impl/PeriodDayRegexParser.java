@@ -21,7 +21,7 @@ public class PeriodDayRegexParser extends TimeRegexParser {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.set(digitalTime.getYear(), digitalTime.getMonth(), digitalTime.getDay(), 0, 0, 0);
+        calendar.set(digitalTime.getYear(), digitalTime.getMonth() - 1, digitalTime.getDay(), 0, 0, 0);
 
 
         String rule = "大前天";
@@ -74,7 +74,7 @@ public class PeriodDayRegexParser extends TimeRegexParser {
         }
 
         digitalTime.setYear(calendar.get(Calendar.YEAR));
-        digitalTime.setMonth(calendar.get(Calendar.MONTH));
+        digitalTime.setMonth(calendar.get(Calendar.MONTH) + 1);
         digitalTime.setDay(calendar.get(Calendar.DATE));
 
         return digitalTime;

@@ -92,7 +92,7 @@ public class PartOfDayRegexParser extends TimeRegexParser {
                 calendar.set(Calendar.DATE, digitalTime.getDay() + 1);
 
                 digitalTime.setYear(calendar.get(Calendar.YEAR));
-                digitalTime.setMonth(calendar.get(Calendar.MONTH));
+                digitalTime.setMonth(calendar.get(Calendar.MONTH) + 1);
                 digitalTime.setDay(calendar.get(Calendar.DATE));
                 digitalTime.setHour(0);
             } else if (digitalTime.getHour() == -1) {

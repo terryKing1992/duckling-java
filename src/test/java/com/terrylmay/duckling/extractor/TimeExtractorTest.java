@@ -19,7 +19,7 @@ public class TimeExtractorTest {
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
         List<DigitalTime> digitalTimeList = timeEntityExtractor.extract(token);
         Assert.assertEquals(1, digitalTimeList.size());
-        Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, digitalTimeList.get(0).getYear());
+        Assert.assertEquals(2019, digitalTimeList.get(0).getYear());
     }
 
     @Test
@@ -28,7 +28,7 @@ public class TimeExtractorTest {
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
         List<DigitalTime> digitalTimeList = timeEntityExtractor.extract(token);
         Assert.assertEquals(1, digitalTimeList.size());
-        Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, digitalTimeList.get(0).getYear());
+        Assert.assertEquals(2019, digitalTimeList.get(0).getYear());
     }
 
     @Test
@@ -102,9 +102,13 @@ public class TimeExtractorTest {
         String token = "晚上12点半";
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
         List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+
         Assert.assertEquals(1, digitalTimes.size());
-        Assert.assertEquals(2018, digitalTimes.get(0).getYear());
-        Assert.assertEquals(Calendar.getInstance().get(Calendar.DATE) + 1, digitalTimes.get(0).getDay());
+        //TODO:: 这个还要处理一下, 如果当前时间已经超过了凌晨00点,那么需要时今天的日期
+        Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
+        Assert.assertEquals(calendar.get(Calendar.DATE) + 1, digitalTimes.get(0).getDay());
     }
 
     @Test
@@ -112,8 +116,11 @@ public class TimeExtractorTest {
         String token = "前年";
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
         List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.add(Calendar.YEAR, -2);
         Assert.assertEquals(1, digitalTimes.size());
-        Assert.assertEquals(2016, digitalTimes.get(0).getYear());
+        Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
     }
 
     @Test
@@ -121,8 +128,11 @@ public class TimeExtractorTest {
         String token = "去年";
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
         List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.add(Calendar.YEAR, -1);
         Assert.assertEquals(1, digitalTimes.size());
-        Assert.assertEquals(2017, digitalTimes.get(0).getYear());
+        Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
     }
 
     @Test
@@ -130,8 +140,10 @@ public class TimeExtractorTest {
         String token = "今年";
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
         List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
         Assert.assertEquals(1, digitalTimes.size());
-        Assert.assertEquals(2018, digitalTimes.get(0).getYear());
+        Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
     }
 
     @Test
@@ -139,8 +151,12 @@ public class TimeExtractorTest {
         String token = "明年";
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
         List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.add(Calendar.YEAR, 1);
+
         Assert.assertEquals(1, digitalTimes.size());
-        Assert.assertEquals(2019, digitalTimes.get(0).getYear());
+        Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
     }
 
     @Test
@@ -148,8 +164,11 @@ public class TimeExtractorTest {
         String token = "后年";
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
         List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.add(Calendar.YEAR, 2);
         Assert.assertEquals(1, digitalTimes.size());
-        Assert.assertEquals(2019, digitalTimes.get(0).getYear());
+        Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
     }
 
     @Test
@@ -157,8 +176,10 @@ public class TimeExtractorTest {
         String token = "明年11月份";
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
         List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
         Assert.assertEquals(1, digitalTimes.size());
-        Assert.assertEquals(2019, digitalTimes.get(0).getYear());
+        Assert.assertEquals(calendar.get(Calendar.YEAR) + 1, digitalTimes.get(0).getYear());
         Assert.assertEquals(11, digitalTimes.get(0).getMonth());
     }
 
@@ -168,9 +189,12 @@ public class TimeExtractorTest {
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
         List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
         Assert.assertEquals(2, digitalTimes.size());
-        Assert.assertEquals(2019, digitalTimes.get(0).getYear());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+
+        Assert.assertEquals(calendar.get(Calendar.YEAR) + 1, digitalTimes.get(0).getYear());
         Assert.assertEquals(11, digitalTimes.get(0).getMonth());
-        Assert.assertEquals(2019, digitalTimes.get(1).getYear());
+        Assert.assertEquals(calendar.get(Calendar.YEAR) + 1, digitalTimes.get(1).getYear());
         Assert.assertEquals(12, digitalTimes.get(1).getMonth());
     }
 
@@ -180,8 +204,12 @@ public class TimeExtractorTest {
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
         List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
         Assert.assertEquals(1, digitalTimes.size());
-        Assert.assertEquals(Calendar.getInstance().get(Calendar.YEAR), digitalTimes.get(0).getYear());
-        Assert.assertEquals(Calendar.getInstance().get(Calendar.MONTH) + 1, digitalTimes.get(0).getMonth());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.add(Calendar.MONTH, 1);
+
+        Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
+        Assert.assertEquals(calendar.get(Calendar.MONTH) + 1, digitalTimes.get(0).getMonth());
     }
 
     @Test
@@ -195,7 +223,7 @@ public class TimeExtractorTest {
 
         calendar.add(Calendar.MONTH, 2);
         Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
-        Assert.assertEquals(calendar.get(Calendar.MONTH), digitalTimes.get(0).getMonth());
+        Assert.assertEquals(calendar.get(Calendar.MONTH) + 1, digitalTimes.get(0).getMonth());
     }
 
     @Test
@@ -209,7 +237,7 @@ public class TimeExtractorTest {
         calendar.add(Calendar.WEEK_OF_MONTH, 2);
         calendar.set(Calendar.DAY_OF_WEEK, 1);
         Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
-        Assert.assertEquals(calendar.get(Calendar.MONTH), digitalTimes.get(0).getMonth());
+        Assert.assertEquals(calendar.get(Calendar.MONTH) + 1, digitalTimes.get(0).getMonth());
         Assert.assertEquals(calendar.get(Calendar.DATE), digitalTimes.get(0).getDay());
     }
 
@@ -223,7 +251,7 @@ public class TimeExtractorTest {
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
         calendar.add(Calendar.DATE, 3);
         Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
-        Assert.assertEquals(calendar.get(Calendar.MONTH), digitalTimes.get(0).getMonth());
+        Assert.assertEquals(calendar.get(Calendar.MONTH) + 1, digitalTimes.get(0).getMonth());
         Assert.assertEquals(calendar.get(Calendar.DATE), digitalTimes.get(0).getDay());
     }
 }

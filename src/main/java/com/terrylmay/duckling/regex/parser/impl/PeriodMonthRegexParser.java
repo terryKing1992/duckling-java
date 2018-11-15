@@ -21,7 +21,7 @@ public class PeriodMonthRegexParser extends TimeRegexParser {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.set(digitalTime.getYear(), digitalTime.getMonth(), digitalTime.getDay(), 0, 0, 0);
+        calendar.set(digitalTime.getYear(), digitalTime.getMonth() - 1, digitalTime.getDay(), 0, 0, 0);
 
         String rule = "((?<=前)\\d(?=(个)?月))";
         Pattern pattern = Pattern.compile(rule);
@@ -29,7 +29,7 @@ public class PeriodMonthRegexParser extends TimeRegexParser {
         if (match.find()) {
             calendar.add(Calendar.MONTH, Integer.parseInt(match.group()));
             digitalTime.setYear(calendar.get(Calendar.YEAR));
-            digitalTime.setMonth(calendar.get(Calendar.MONTH));
+            digitalTime.setMonth(calendar.get(Calendar.MONTH) + 1);
         }
 
         rule = "上上(个)?月";
@@ -38,7 +38,7 @@ public class PeriodMonthRegexParser extends TimeRegexParser {
         if (match.find()) {
             calendar.add(Calendar.MONTH, -2);
             digitalTime.setYear(calendar.get(Calendar.YEAR));
-            digitalTime.setMonth(calendar.get(Calendar.MONTH));
+            digitalTime.setMonth(calendar.get(Calendar.MONTH) + 1);
         }
 
         rule = "上(个)?月";
@@ -47,14 +47,14 @@ public class PeriodMonthRegexParser extends TimeRegexParser {
         if (match.find()) {
             calendar.add(Calendar.MONTH, -1);
             digitalTime.setYear(calendar.get(Calendar.YEAR));
-            digitalTime.setMonth(calendar.get(Calendar.MONTH));
+            digitalTime.setMonth(calendar.get(Calendar.MONTH) + 1);
         }
 
         rule = "(本|这个|这)月";
         pattern = Pattern.compile(rule);
         match = pattern.matcher(token);
         if (match.find()) {
-            digitalTime.setMonth(calendar.get(Calendar.MONTH));
+            digitalTime.setMonth(calendar.get(Calendar.MONTH) + 1);
         }
 
         rule = "((?<!下)下(个)?月)";
@@ -63,7 +63,7 @@ public class PeriodMonthRegexParser extends TimeRegexParser {
         if (match.find()) {
             calendar.add(Calendar.MONTH, 1);
             digitalTime.setYear(calendar.get(Calendar.YEAR));
-            digitalTime.setMonth(calendar.get(Calendar.MONTH));
+            digitalTime.setMonth(calendar.get(Calendar.MONTH) + 1);
         }
 
         rule = "下下(个)?月";
@@ -72,7 +72,7 @@ public class PeriodMonthRegexParser extends TimeRegexParser {
         if (match.find()) {
             calendar.add(Calendar.MONTH, 2);
             digitalTime.setYear(calendar.get(Calendar.YEAR));
-            digitalTime.setMonth(calendar.get(Calendar.MONTH));
+            digitalTime.setMonth(calendar.get(Calendar.MONTH) + 1);
         }
 
         rule = "(?<=(后))\\d(?=(个)?月)";
@@ -81,7 +81,7 @@ public class PeriodMonthRegexParser extends TimeRegexParser {
         if (match.find()) {
             calendar.add(Calendar.MONTH, Integer.parseInt(match.group()));
             digitalTime.setYear(calendar.get(Calendar.YEAR));
-            digitalTime.setMonth(calendar.get(Calendar.MONTH));
+            digitalTime.setMonth(calendar.get(Calendar.MONTH) + 1);
         }
 
         return digitalTime;
