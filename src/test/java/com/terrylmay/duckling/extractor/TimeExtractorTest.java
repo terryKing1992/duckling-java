@@ -394,4 +394,24 @@ public class TimeExtractorTest {
             System.out.println(digitalTime.toString());
         }
     }
+
+    @Test
+    public void extract_time_from_token_test14() {
+        String token = "明天早上帮我请两个小时的假";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
+
+    @Test
+    public void extract_time_from_token_test15() {
+        String token = "明天开始请两天的假";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
 }
