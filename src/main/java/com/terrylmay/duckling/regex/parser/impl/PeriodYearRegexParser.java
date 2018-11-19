@@ -12,16 +12,23 @@ import java.util.regex.Pattern;
 public class PeriodYearRegexParser extends TimeRegexParser {
     @Override
     public void preferFuture(DigitalTime digitalTime, DigitalTimeContext digitalTimeContext) {
+        if (digitalTime.getYear() == -1 && digitalTimeContext == null) {
+            digitalTime.setYear(Calendar.getInstance().get(Calendar.YEAR));
+            return;
+        }
 
+        //这边之所以能够直接返回是因为如果上下文已经有了时间, 那么必定会填充成4位的年份
+        if (digitalTime.getYear() == -1 && digitalTimeContext != null) {
+            digitalTime.setYear(digitalTimeContext.getContxt().getYear());
+            return;
+        }
     }
 
     @Override
     public BaseEntity parse(String token, BaseEntity baseEntity, Context context) {
         DigitalTime digitalTime = (DigitalTime) baseEntity;
         DigitalTimeContext digitalTimeContext = (DigitalTimeContext) context;
-        Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.set(digitalTime.getYear(), digitalTime.getMonth() - 1, digitalTime.getDay(), 0, 0, 0);
+        Calendar calendar = this.getCalendarFromDigitalTime(digitalTime);
 
         String rule = "前年";
         Pattern pattern = Pattern.compile(rule);
@@ -61,7 +68,7 @@ public class PeriodYearRegexParser extends TimeRegexParser {
             calendar.add(Calendar.YEAR, 2);
             digitalTime.setYear(calendar.get(Calendar.YEAR));
         }
-
+        this.preferFuture(digitalTime, digitalTimeContext);
         return digitalTime;
     }
 }

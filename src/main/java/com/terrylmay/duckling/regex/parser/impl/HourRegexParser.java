@@ -25,6 +25,27 @@ public class HourRegexParser extends TimeRegexParser {
             preferFuture(digitalTime, digitalTimeContext);
         }
 
+        rule = "(?<!(周|星期))([0-2]?[0-9]):[0-5]?[0-9]:[0-5]?[0-9]";
+        pattern = Pattern.compile(rule);
+        match = pattern.matcher(token);
+        if (match.find()) {
+            String matchGroup = match.group();
+            String[] args = matchGroup.split(":");
+            digitalTime.setHour(Integer.parseInt(args[0]));
+            digitalTime.setMinute(Integer.parseInt(args[1]));
+            digitalTime.setSecond(Integer.parseInt(args[2]));
+        } else {
+            rule = "(?<!(周|星期))([0-2]?[0-9]):[0-5]?[0-9]";
+            pattern = Pattern.compile(rule);
+            match = pattern.matcher(token);
+            if (match.find()) {
+                String matchGroup = match.group();
+                String[] args = matchGroup.split(":");
+                digitalTime.setHour(Integer.parseInt(args[0]));
+                digitalTime.setMinute(Integer.parseInt(args[1]));
+            }
+        }
+
         return digitalTime;
     }
 
@@ -36,6 +57,15 @@ public class HourRegexParser extends TimeRegexParser {
 
         if (digitalTime.getHour() == -1 && digitalTimeContext != null) {
             digitalTime.setHour(digitalTimeContext.getContxt().getHour());
+        }
+
+        if (digitalTimeContext != null
+                && digitalTime.getYear() == digitalTimeContext.getContxt().getYear()
+                && digitalTime.getMonth() == digitalTimeContext.getContxt().getMonth()
+                && digitalTime.getDay() == digitalTimeContext.getContxt().getDay()) {
+            if (digitalTime.getHour() < digitalTimeContext.getContxt().getHour()) {
+                digitalTime.setHour(digitalTime.getHour() + 12);
+            }
         }
     }
 }

@@ -19,9 +19,7 @@ public class PeriodMonthRegexParser extends TimeRegexParser {
     public BaseEntity parse(String token, BaseEntity baseEntity, Context context) {
         DigitalTime digitalTime = (DigitalTime) baseEntity;
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.set(digitalTime.getYear(), digitalTime.getMonth() - 1, digitalTime.getDay(), 0, 0, 0);
+        Calendar calendar = this.getCalendarFromDigitalTime(digitalTime);
 
         String rule = "((?<=前)\\d(?=(个)?月))";
         Pattern pattern = Pattern.compile(rule);

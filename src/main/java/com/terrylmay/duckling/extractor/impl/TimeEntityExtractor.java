@@ -20,17 +20,18 @@ public class TimeEntityExtractor implements EntityExtractor {
     static List<RegexParser> regexParserChain = new ArrayList<>();
 
     static {
-        regexParserChain.add(new YearRegexParser());
-        regexParserChain.add(new MonthRegexParser());
-        regexParserChain.add(new DayRegexParser());
-        regexParserChain.add(new HourRegexParser());
-        regexParserChain.add(new MinuteRegexParser());
-        regexParserChain.add(new SecondRegexParser());
-        regexParserChain.add(new PartOfDayRegexParser());
         regexParserChain.add(new PeriodYearRegexParser());
+        regexParserChain.add(new YearRegexParser());
         regexParserChain.add(new PeriodMonthRegexParser());
+        regexParserChain.add(new MonthRegexParser());
         regexParserChain.add(new PeriodWeekRegexParser());
         regexParserChain.add(new PeriodDayRegexParser());
+
+        regexParserChain.add(new DayRegexParser());
+        regexParserChain.add(new HourRegexParser());
+        regexParserChain.add(new PartOfDayRegexParser());
+        regexParserChain.add(new MinuteRegexParser());
+        regexParserChain.add(new SecondRegexParser());
     }
 
     public TimeEntityExtractor() {

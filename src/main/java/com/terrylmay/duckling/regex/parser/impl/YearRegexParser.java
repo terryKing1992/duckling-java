@@ -46,16 +46,6 @@ public class YearRegexParser extends TimeRegexParser {
 
     @Override
     public void preferFuture(DigitalTime digitalTime, DigitalTimeContext digitalTimeContext) {
-        if (digitalTime.getYear() == -1 && digitalTimeContext == null) {
-            digitalTime.setYear(Calendar.getInstance().get(Calendar.YEAR));
-            return;
-        }
-
-        //这边之所以能够直接返回是因为如果上下文已经有了时间, 那么必定会填充成4位的年份
-        if (digitalTime.getYear() == -1 && digitalTimeContext != null) {
-            digitalTime.setYear(digitalTimeContext.getContxt().getYear());
-            return;
-        }
 
         if (digitalTime.getYear() >= 0 && digitalTime.getYear() < 100) {
             if (digitalTime.getYear() < 30) {

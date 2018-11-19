@@ -19,9 +19,7 @@ public class PeriodWeekRegexParser extends TimeRegexParser {
     public BaseEntity parse(String token, BaseEntity baseEntity, Context context) {
         DigitalTime digitalTime = (DigitalTime) baseEntity;
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.set(digitalTime.getYear(), digitalTime.getMonth() - 1, digitalTime.getDay(), 0, 0, 0);
+        Calendar calendar = this.getCalendarFromDigitalTime(digitalTime);
 
         String rule = "(?<=(上上(周|星期)))[1-7]?";
         Pattern pattern = Pattern.compile(rule);
@@ -36,6 +34,8 @@ public class PeriodWeekRegexParser extends TimeRegexParser {
             week = (week == 7 ? 1 : ++week);
             calendar.add(Calendar.WEEK_OF_MONTH, -2);
             calendar.set(Calendar.DAY_OF_WEEK, week);
+            this.setDigitalTime(digitalTime, calendar);
+
         }
 
         rule = "(?<=((?<!上)上(周|星期)))[1-7]?";
@@ -52,6 +52,8 @@ public class PeriodWeekRegexParser extends TimeRegexParser {
 
             calendar.add(Calendar.WEEK_OF_MONTH, -1);
             calendar.set(Calendar.DAY_OF_WEEK, week);
+            this.setDigitalTime(digitalTime, calendar);
+
         }
 
         rule = "(?<=((?<!下)下(周|星期)))[1-7]?";
@@ -68,6 +70,8 @@ public class PeriodWeekRegexParser extends TimeRegexParser {
 
             calendar.add(Calendar.WEEK_OF_MONTH, 1);
             calendar.set(Calendar.DAY_OF_WEEK, week);
+            this.setDigitalTime(digitalTime, calendar);
+
         }
 
         rule = "(?<=(下下(个)?(周|星期)))[1-7]?";
@@ -84,6 +88,8 @@ public class PeriodWeekRegexParser extends TimeRegexParser {
 
             calendar.add(Calendar.WEEK_OF_MONTH, 2);
             calendar.set(Calendar.DAY_OF_WEEK, week);
+            this.setDigitalTime(digitalTime, calendar);
+
         }
 
         rule = "(?<=((?<!(上|下))(周|星期)))[1-7]?";
@@ -99,11 +105,8 @@ public class PeriodWeekRegexParser extends TimeRegexParser {
             week = (week == 7 ? 1 : ++week);
             calendar.add(Calendar.WEEK_OF_MONTH, 0);
             calendar.set(Calendar.DAY_OF_WEEK, week);
+            this.setDigitalTime(digitalTime, calendar);
         }
-
-        digitalTime.setYear(calendar.get(Calendar.YEAR));
-        digitalTime.setMonth(calendar.get(Calendar.MONTH) + 1);
-        digitalTime.setDay(calendar.get(Calendar.DATE));
 
         return digitalTime;
     }

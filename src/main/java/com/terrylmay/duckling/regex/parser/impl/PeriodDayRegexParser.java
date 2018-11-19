@@ -19,16 +19,15 @@ public class PeriodDayRegexParser extends TimeRegexParser {
     public BaseEntity parse(String token, BaseEntity baseEntity, Context context) {
         DigitalTime digitalTime = (DigitalTime) baseEntity;
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.set(digitalTime.getYear(), digitalTime.getMonth() - 1, digitalTime.getDay(), 0, 0, 0);
-
+        Calendar calendar = getCalendarFromDigitalTime(digitalTime);
 
         String rule = "大前天";
         Pattern pattern = Pattern.compile(rule);
         Matcher match = pattern.matcher(token);
         if (match.find()) {
             calendar.add(Calendar.DATE, -3);
+            this.setDigitalTime(digitalTime, calendar);
+
         }
 
         rule = "(?<!大)前天";
@@ -36,6 +35,8 @@ public class PeriodDayRegexParser extends TimeRegexParser {
         match = pattern.matcher(token);
         if (match.find()) {
             calendar.add(Calendar.DATE, -2);
+            this.setDigitalTime(digitalTime, calendar);
+
         }
 
         rule = "昨";
@@ -43,6 +44,8 @@ public class PeriodDayRegexParser extends TimeRegexParser {
         match = pattern.matcher(token);
         if (match.find()) {
             calendar.add(Calendar.DATE, -1);
+            this.setDigitalTime(digitalTime, calendar);
+
         }
 
         rule = "今(?!年)";
@@ -50,6 +53,8 @@ public class PeriodDayRegexParser extends TimeRegexParser {
         match = pattern.matcher(token);
         if (match.find()) {
             calendar.add(Calendar.DATE, 0);
+            this.setDigitalTime(digitalTime, calendar);
+
         }
 
         rule = "明(?!年)";
@@ -57,6 +62,8 @@ public class PeriodDayRegexParser extends TimeRegexParser {
         match = pattern.matcher(token);
         if (match.find()) {
             calendar.add(Calendar.DATE, 1);
+            this.setDigitalTime(digitalTime, calendar);
+
         }
 
         rule = "(?<!大)后天";
@@ -64,6 +71,8 @@ public class PeriodDayRegexParser extends TimeRegexParser {
         match = pattern.matcher(token);
         if (match.find()) {
             calendar.add(Calendar.DATE, 2);
+            this.setDigitalTime(digitalTime, calendar);
+
         }
 
         rule = "大后天";
@@ -71,11 +80,8 @@ public class PeriodDayRegexParser extends TimeRegexParser {
         match = pattern.matcher(token);
         if (match.find()) {
             calendar.add(Calendar.DATE, 3);
+            this.setDigitalTime(digitalTime, calendar);
         }
-
-        digitalTime.setYear(calendar.get(Calendar.YEAR));
-        digitalTime.setMonth(calendar.get(Calendar.MONTH) + 1);
-        digitalTime.setDay(calendar.get(Calendar.DATE));
 
         return digitalTime;
     }
