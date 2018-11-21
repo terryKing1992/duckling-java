@@ -106,9 +106,27 @@ public class TimeExtractorTest {
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
 
         Assert.assertEquals(1, digitalTimes.size());
-        //TODO:: 这个还要处理一下, 如果当前时间已经超过了凌晨00点,那么需要时今天的日期
         Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
         Assert.assertEquals(calendar.get(Calendar.DATE) + 1, digitalTimes.get(0).getDay());
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime);
+        }
+    }
+
+    @Test
+    public void extract_part_of_day_hour_from_token() {
+        String token = "晚上11点";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+
+        Assert.assertEquals(1, digitalTimes.size());
+        Assert.assertEquals(calendar.get(Calendar.YEAR), digitalTimes.get(0).getYear());
+        Assert.assertEquals(calendar.get(Calendar.DATE), digitalTimes.get(0).getDay());
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime);
+        }
     }
 
     @Test
@@ -408,6 +426,77 @@ public class TimeExtractorTest {
     @Test
     public void extract_time_from_token_test15() {
         String token = "明天开始请两天的假";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
+
+    @Test
+    public void extract_time_from_token_test16() {
+        String token = "明天请一整天的假";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
+
+    @Test
+    public void extract_time_from_token_test17() {
+        String token = "明天请半天的假";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
+
+    @Test
+    public void extract_time_from_token_test18() {
+        String token = "明天早上请1个小时的假";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
+
+
+    @Test
+    public void extract_time_from_token_test19() {
+        String token = "明天早上请两个小时的假";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
+
+    @Test
+    public void extract_time_from_token_test20() {
+        String token = "明天早上晚到一个小时";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
+
+    @Test
+    public void extract_time_from_token_test21() {
+        String token = "明天下午请1个小时的假";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
+
+    @Test
+    public void extract_time_from_token_test22() {
+        String token = "明天下午请1个半小时的假";
         TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
         List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
         for (DigitalTime digitalTime : digitalTimes) {

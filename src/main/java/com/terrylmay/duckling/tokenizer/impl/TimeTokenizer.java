@@ -13,8 +13,16 @@ public class TimeTokenizer implements Tokenizer {
 
     static {
         TIME_TOKEN_REGEX.append("(");
-        //先处理年份的字符串提取
+        //请假时间提取
+        TIME_TOKEN_REGEX.append("(\\d+整天)|(\\d+天)");
+        TIME_TOKEN_REGEX.append("|");
+        TIME_TOKEN_REGEX.append("(半天)");
+        TIME_TOKEN_REGEX.append("|");
 
+        TIME_TOKEN_REGEX.append("(\\d.\\d)(个)?(小时)");
+        TIME_TOKEN_REGEX.append("|");
+
+        //通用场景时间提取
         TIME_TOKEN_REGEX.append("(前|昨|今|明|后)(天|日)?(早|晚)(晨|上|间)?)");
         TIME_TOKEN_REGEX.append("|");
         TIME_TOKEN_REGEX.append("(\\d+个?半?(小时|钟头|h|H))");
@@ -106,8 +114,6 @@ public class TimeTokenizer implements Tokenizer {
         TIME_TOKEN_REGEX.append("(日前)");
         TIME_TOKEN_REGEX.append("|");
         TIME_TOKEN_REGEX.append("(新世纪)");
-        TIME_TOKEN_REGEX.append("|");
-        TIME_TOKEN_REGEX.append("(小时)");
         TIME_TOKEN_REGEX.append("|");
         TIME_TOKEN_REGEX.append("(([0-3][0-9]|[1-9])(日|号))");
         TIME_TOKEN_REGEX.append("|");

@@ -1,5 +1,6 @@
 package com.terrylmay.duckling.regex.parser.impl;
 
+import com.terrylmay.duckling.constants.PartOfDayEnum;
 import com.terrylmay.duckling.context.Context;
 import com.terrylmay.duckling.context.DigitalTimeContext;
 import com.terrylmay.duckling.entity.BaseEntity;
@@ -17,7 +18,7 @@ public class DayRegexParser extends TimeRegexParser {
 
         DigitalTime digitalTime = (DigitalTime) baseEntity;
         DigitalTimeContext digitalTimeContext = (DigitalTimeContext) context;
-
+        Calendar calendar = this.getCalendarFromDigitalTime(digitalTime);
         Pattern pattern = Pattern.compile(rule);
         Matcher match = pattern.matcher(token);
         if (match.find()) {
@@ -74,6 +75,33 @@ public class DayRegexParser extends TimeRegexParser {
                 String date = matchStr.substring(splitIndex + 1);
                 digitalTime.setMonth(Integer.parseInt(month));
                 digitalTime.setDay(Integer.parseInt(date));
+            }
+        }
+
+
+        rule = "\\d(?=(天))";
+        pattern = Pattern.compile(rule);
+        match = pattern.matcher(token);
+        if (match.find()) {
+            calendar.add(Calendar.DATE, Integer.parseInt(match.group()));
+            this.setDigitalTime(digitalTime, calendar);
+        }
+
+        rule = "(1)(?=(整天))";
+        pattern = Pattern.compile(rule);
+        match = pattern.matcher(token);
+        if (match.find()) {
+            digitalTime.setHour(PartOfDayEnum.WORK_TIME_END.getHour());
+        }
+
+        rule = "半天";
+        pattern = Pattern.compile(rule);
+        match = pattern.matcher(token);
+        if (match.find()) {
+            if (digitalTime.getHour() > 12) {
+                digitalTime.setHour(PartOfDayEnum.WORK_TIME_END.getHour());
+            } else {
+                digitalTime.setHour(PartOfDayEnum.MIDDLEDAY.getHour());
             }
         }
 

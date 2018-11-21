@@ -83,22 +83,8 @@ public class PartOfDayRegexParser extends TimeRegexParser {
         pattern = Pattern.compile(rule);
         match = pattern.matcher(token);
         if (match.find()) {
-            if (digitalTime.getHour() >= 1 && digitalTime.getHour() <= 11) {
-                digitalTime.setHour(digitalTime.getHour() + 12);
-            } else if (digitalTime.getHour() == 12) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.YEAR, digitalTime.getYear());
-                calendar.set(Calendar.MONTH, digitalTime.getMonth());
-                calendar.set(Calendar.DATE, digitalTime.getDay() + 1);
-
-                digitalTime.setYear(calendar.get(Calendar.YEAR));
-                digitalTime.setMonth(calendar.get(Calendar.MONTH) + 1);
-                digitalTime.setDay(calendar.get(Calendar.DATE));
-                digitalTime.setHour(0);
-            } else if (digitalTime.getHour() == -1) {
-                digitalTime.setHour(PartOfDayEnum.NIGHT.getHour());
-                digitalTime.setMinute(PartOfDayEnum.NIGHT.getMinute());
-            }
+            digitalTime.setHour(PartOfDayEnum.NIGHT.getHour());
+            digitalTime.setMinute(PartOfDayEnum.NIGHT.getMinute());
         }
 
         return digitalTime;

@@ -38,6 +38,14 @@ public abstract class TimeRegexParser implements RegexParser {
         if (digitalTime.getDay() != -1) {
             calendar.set(Calendar.DATE, digitalTime.getDay());
         }
+
+        if (digitalTime.getHour() != -1) {
+            calendar.set(Calendar.HOUR_OF_DAY, digitalTime.getHour());
+        }
+
+        if (digitalTime.getMinute() != -1) {
+            calendar.set(Calendar.MINUTE, digitalTime.getMinute());
+        }
         return calendar;
     }
 }

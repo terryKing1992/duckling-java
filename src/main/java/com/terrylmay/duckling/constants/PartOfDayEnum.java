@@ -6,6 +6,7 @@ public enum PartOfDayEnum {
     MORNING(10), //上午
     MIDDLEDAY(12), //中午、午间
     AFTERNOON(13), //下午、午后
+    WORK_TIME_END(18),
     NIGHT(19);//晚上、傍晚、晚、晚间
 
 

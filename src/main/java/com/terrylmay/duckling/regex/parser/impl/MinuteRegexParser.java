@@ -1,5 +1,6 @@
 package com.terrylmay.duckling.regex.parser.impl;
 
+import com.terrylmay.duckling.constants.PartOfDayEnum;
 import com.terrylmay.duckling.context.Context;
 import com.terrylmay.duckling.context.DigitalTimeContext;
 import com.terrylmay.duckling.entity.BaseEntity;
@@ -52,7 +53,9 @@ public class MinuteRegexParser extends TimeRegexParser {
 
     @Override
     public void preferFuture(DigitalTime digitalTime, DigitalTimeContext digitalTimeContext) {
-
+        if (digitalTime.getHour() == -1 && digitalTime.getMinute() == -1 && digitalTimeContext == null) {
+            digitalTime.setMinute(PartOfDayEnum.EARLY_MORNING.getMinute());
+        }
     }
 
 }
