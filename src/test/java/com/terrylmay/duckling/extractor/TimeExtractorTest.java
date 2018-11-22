@@ -503,4 +503,64 @@ public class TimeExtractorTest {
             System.out.println(digitalTime.toString());
         }
     }
+
+    @Test
+    public void extract_time_from_token_test23() {
+        String token = "明天下午请2个小时的假";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
+
+    @Test
+    public void extract_time_from_token_test24() {
+        String token = "明天请一上午的假";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
+
+    @Test
+    public void extract_time_from_token_test25() {
+        String token = "明天请一下午的假";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
+
+    @Test
+    public void extract_time_from_token_test26() {
+        String token = "明天下午请半个小时假";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
+
+    @Test
+    public void extract_time_from_token_test27() {
+        String token = "明天下午";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
+
+    @Test
+    public void extract_time_from_token_test28() {
+        String token = "星期一上午";
+        TimeEntityExtractor timeEntityExtractor = new TimeEntityExtractor();
+        List<DigitalTime> digitalTimes = timeEntityExtractor.extract(token);
+        for (DigitalTime digitalTime : digitalTimes) {
+            System.out.println(digitalTime.toString());
+        }
+    }
 }

@@ -49,7 +49,7 @@ public class PartOfDayRegexParser extends TimeRegexParser {
             }
         }
 
-        rule = "上午";
+        rule = "(?<!(\\d))上午";
         pattern = Pattern.compile(rule);
         match = pattern.matcher(token);
         if (match.find()) {

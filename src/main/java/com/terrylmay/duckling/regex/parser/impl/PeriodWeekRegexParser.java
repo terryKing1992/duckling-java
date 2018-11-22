@@ -71,7 +71,6 @@ public class PeriodWeekRegexParser extends TimeRegexParser {
             calendar.add(Calendar.WEEK_OF_MONTH, 1);
             calendar.set(Calendar.DAY_OF_WEEK, week);
             this.setDigitalTime(digitalTime, calendar);
-
         }
 
         rule = "(?<=(下下(个)?(周|星期)))[1-7]?";
@@ -103,7 +102,11 @@ public class PeriodWeekRegexParser extends TimeRegexParser {
                 week = 1;
             }
             week = (week == 7 ? 1 : ++week);
-            calendar.add(Calendar.WEEK_OF_MONTH, 0);
+            if (calendar.get(Calendar.DAY_OF_WEEK) > week) {
+                calendar.add(Calendar.WEEK_OF_MONTH, 1);
+            } else {
+                calendar.add(Calendar.WEEK_OF_MONTH, 0);
+            }
             calendar.set(Calendar.DAY_OF_WEEK, week);
             this.setDigitalTime(digitalTime, calendar);
         }

@@ -100,6 +100,25 @@ public class HourRegexParser extends TimeRegexParser {
                 digitalTime.setMinute(30);
             }
         }
+
+        rule = "(?<!(星期|周))(1)(?=(上午))";
+        pattern = Pattern.compile(rule);
+        match = pattern.matcher(token);
+        if (match.find()) {
+            digitalTime.setHour(12);
+            digitalTime.setMinute(30);
+        }
+
+        rule = "(?<!(星期|周))(1)(?=(下午))";
+        pattern = Pattern.compile(rule);
+        match = pattern.matcher(token);
+        if (match.find()) {
+            digitalTime.setHour(18);
+            digitalTime.setMinute(0);
+            digitalTimeContext.getContxt().setHour(14);
+            digitalTimeContext.getContxt().setMinute(0);
+        }
+
         return digitalTime;
     }
 

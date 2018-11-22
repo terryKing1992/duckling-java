@@ -53,7 +53,7 @@ public class MinuteRegexParser extends TimeRegexParser {
 
     @Override
     public void preferFuture(DigitalTime digitalTime, DigitalTimeContext digitalTimeContext) {
-        if (digitalTime.getHour() == -1 && digitalTime.getMinute() == -1 && digitalTimeContext == null) {
+        if ((digitalTime.getHour() == -1 || digitalTime.getHour() == 8) && digitalTime.getMinute() == -1 && digitalTimeContext == null) {
             digitalTime.setMinute(PartOfDayEnum.EARLY_MORNING.getMinute());
         }
     }

@@ -18,8 +18,11 @@ public class TimeTokenizer implements Tokenizer {
         TIME_TOKEN_REGEX.append("|");
         TIME_TOKEN_REGEX.append("(半天)");
         TIME_TOKEN_REGEX.append("|");
-
         TIME_TOKEN_REGEX.append("(\\d.\\d)(个)?(小时)");
+        TIME_TOKEN_REGEX.append("|");
+        TIME_TOKEN_REGEX.append("(\\d上午)");
+        TIME_TOKEN_REGEX.append("|");
+        TIME_TOKEN_REGEX.append("(\\d下午)");
         TIME_TOKEN_REGEX.append("|");
 
         //通用场景时间提取

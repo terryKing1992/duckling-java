@@ -47,7 +47,7 @@ public class TimeEntityExtractor implements EntityExtractor {
         Context digitalTimeContext = null;
         for (String token : tokens) {
             DigitalTime digitalTime = this.extractFromToken(token, digitalTimeContext);
-            digitalTimeContext = new DigitalTimeContext(digitalTime.clone());
+            digitalTimeContext = new DigitalTimeContext(digitalTime);
             digitalTimes.add(digitalTime);
         }
 
